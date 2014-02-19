@@ -1,0 +1,50 @@
+<link rel="stylesheet" href="http://jquery.bassistance.de/validate/demo/css/screen.css" />
+<script src="http://jquery.bassistance.de/validate/lib/jquery.js"></script>
+<script src="http://jquery.bassistance.de/validate/jquery.validate.js"></script>
+<script>    
+// JQuery Script to submit Form
+$(document).ready(function () {
+    $("#commentForm").validate({
+        submitHandler : function () {
+            // your function if, validate is success
+            $.ajax({
+                type : "POST",
+                url : "ResposeBack.php",
+                data : $('#commentForm').serialize(),
+                success : function (data) {
+                    alert(data["0"]);
+                    $('#message').html(data);
+                    
+                }
+            });
+        }
+    });
+});
+</script>
+
+<form class="cmxform" id="commentForm" method="get" action="">
+    <fieldset>        
+        <p>
+            <label for="cname">Name (required, at least 2 characters)</label>
+            <input id="cname" name="name" minlength="2" type="text" required />
+            <p>
+                <label for="cemail">E-Mail (required)</label>
+                <input id="cemail" type="email" name="email" required />
+                <input id="cemail" type="text" name="username" required />
+            </p>
+            <p>
+                <label for="curl">URL (required)</label>
+                <input id="curl" type="url" name="url" />
+            </p>
+            <p>
+                <label for="ccomment">Your comment (required)</label>
+                <textarea id="ccomment" name="comment" required></textarea>
+            </p>
+            <p>
+                <input class="submit" type="submit" value="Submit" />
+            </p>
+    </fieldset>
+</form>
+
+<div id="message"></div>
+<div id="message"><?php echo $username ?></div>
